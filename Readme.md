@@ -22,7 +22,7 @@
 - version 2021.3.18
 
 # Author
-- Kan Hatakeyama-Sato and Kenichi Oyaizu
+- Kan Hatakeyama-Sato
 - Waseda University
 - https://kanhatakeyama.github.io/
 - http://www.appchem.waseda.ac.jp/~polymer/PolymerDatabase/
