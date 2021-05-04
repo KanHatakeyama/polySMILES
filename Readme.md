@@ -20,6 +20,8 @@
 
 # History
 - version 2021.3.18
+- version 2021.5.04
+	- Impllement fingerprint and JRGUI, change interfaces
 
 # Author
 - Kan Hatakeyama-Sato

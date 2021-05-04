@@ -2,29 +2,40 @@ from rdkit.ML.Descriptors import MoleculeDescriptors
 from rdkit.Chem import Descriptors
 from rdkit import Chem
 import numpy as np
+import pandas as pd
+
 
 from read_smiles import read_smiles
 from polymer_graph_helper import rename_polymer_nodes,update_QQ_nodes,update_Q_nodes,fragmentate_units,draw_chem_graph
 from polymer_graph_helper import graph_to_dict,process_molecular_weight
 
+from AutoDescriptor import AutoDescriptor
 
-descriptor_names = [descriptor_name[0] for descriptor_name in Descriptors._descList]
-descriptor_calculation = MoleculeDescriptors.MolecularDescriptorCalculator(descriptor_names)
-default_calculator=descriptor_calculation.CalcDescriptors
 
 
 class PolySMILES:
 
     def __init__(self,
-                calculator=default_calculator,
-                descriptor_names=descriptor_names,
+                calculator=AutoDescriptor(),
                 cap_atom="H",
-                fill_nan=0
+                 
                 ):
         self.calculator=calculator
-        self.descriptor_names=descriptor_names
         self.cap_atom=cap_atom
-        self.fill_nan=fill_nan
+        self.dict_mode=True
+        
+    def auto(self,smiles_list):
+        if type(smiles_list) is type(""):
+            smiles_list=[smiles_list]
+        res_dict={}
+        for i,smiles in enumerate(smiles_list):
+            try:
+            #if True:
+                res_dict[i]=self.smiles_to_weighted_descriptors(smiles)
+            except:
+                print(i, " error!",  smiles)
+        return pd.DataFrame.from_dict(res_dict).T
+
 
     def smiles_to_dict(self,
                        smiles,
@@ -67,24 +78,26 @@ class PolySMILES:
     
     
     def _calc_descriptor(self,smiles):
-
         smiles=smiles.replace("Q",self.cap_atom)
-        mol = Chem.MolFromSmiles(smiles)
-        descriptor=np.array(self.calculator(mol))
-
-        if self.fill_nan is not None:
-            descriptor=np.nan_to_num(descriptor,nan=self.fill_nan)
-
-        return descriptor
-
+        res_df=self.calculator(smiles)
+        res_dict={k:v for k,v in zip(res_df.columns,res_df.values[0])}
+        res_dict.pop("SMILES")
+        
+        if self.dict_mode:
+            return res_dict
+        else:
+            return list(res_dict.values())
     
     def smiles_to_weighted_descriptors(self,
                                        smiles,
                                        default_n=50
                                       ):
 
+        temp_mode=self.dict_mode
+        self.dict_mode=False
         pol_dict=self.smiles_to_dict(smiles,calculate_descriptor=True)        
-
+        self.dict_mode=temp_mode
+        
         mw_array=[]
         #calculate molecular weight of each unit
         for unit in pol_dict.keys():
@@ -109,8 +122,8 @@ class PolySMILES:
         average_descriptor=np.dot(desc_array.T,mw_ratio)
 
         #return as dict
-        desc_dict={"total MW":total_mw}
-        temp_dict={k:v for k,v in zip(self.descriptor_names,average_descriptor)}
+        desc_dict={"SMILES":smiles,"total MW":total_mw}
+        temp_dict={k:v for k,v in zip(self.calculator.descriptor_names,average_descriptor)}
         desc_dict.update(temp_dict)
 
         return desc_dict
