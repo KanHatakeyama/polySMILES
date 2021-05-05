@@ -6,7 +6,7 @@ sys.path.append('polysmiles')
 setup(name='polysmiles',
         version='2021.5.04',
         description='PolySMILES',
-        long_description=README,
+        long_description="README",
         author='Kan Hatakeyama',
         license=license,
         packages = ["PolySMILES"],
