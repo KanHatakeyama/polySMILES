@@ -10,7 +10,7 @@ setup(name='polysmiles',
         author='Kan Hatakeyama',
         license=license,
         #packages = ["PolySMILES"],
-        packages = find_packages("src"),
+        packages = find_packages("polysmiles"),
         #package_dir = {'PolySMILES': 'polysmiles'}
         package_dir = {'': 'src'}
     )
