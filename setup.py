@@ -9,6 +9,8 @@ setup(name='polysmiles',
         long_description="README",
         author='Kan Hatakeyama',
         license=license,
-        packages = find_packages("polysmiles"),
-        package_dir = {'': 'polysmiles'}
+        packages = find_packages(),
+        #packages = ["PolySMILES"],
+        #package_dir = {'': 'polysmiles'}
+        #package_dir = {'PolySMILES': 'polysmiles'}
     )

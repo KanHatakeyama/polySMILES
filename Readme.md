@@ -5,11 +5,8 @@
 <img src="pics/top.PNG">
 
 # Install
-1. Copy "polysmiles" folder to your project
-2. Add path to the library
-    - import sys
-    - sys.path.append("polysmiles")
-3. RDKit and networkX are required
+- pip install git+https://github.com/KanHatakeyama/polySMILES.git
+- RDKit and networkX are required
 
 # Notes
 - This module works on "pysmiles" library

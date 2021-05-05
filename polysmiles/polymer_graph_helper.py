@@ -4,7 +4,7 @@ import networkx as nx
 import re
 import copy
 
-from write_smiles import write_smiles
+from .write_smiles import write_smiles
 
 
 #***** graph processing funcs ***********

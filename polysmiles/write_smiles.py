@@ -26,7 +26,7 @@ from collections import defaultdict
 
 import networkx as nx
 
-from smiles_helper import remove_explicit_hydrogens, format_atom
+from .smiles_helper import remove_explicit_hydrogens, format_atom
 
 
 def _get_ring_marker(used_markers):

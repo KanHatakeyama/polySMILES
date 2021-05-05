@@ -14,7 +14,7 @@ import pandas as pd
 import numpy as np
 from numpy import inf
 from rdkit.Avalon.pyAvalonTools import GetAvalonFP
-from JRWrapper import JRWrapper
+from .JRWrapper import JRWrapper
 
 #make mol object from smiles
 def mol_from_smiles(smiles,assert_smiles=True):

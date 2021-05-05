@@ -5,11 +5,11 @@ import numpy as np
 import pandas as pd
 
 
-from read_smiles import read_smiles
-from polymer_graph_helper import rename_polymer_nodes,update_QQ_nodes,update_Q_nodes,fragmentate_units,draw_chem_graph
-from polymer_graph_helper import graph_to_dict,process_molecular_weight
+from .read_smiles import read_smiles
+from .polymer_graph_helper import rename_polymer_nodes,update_QQ_nodes,update_Q_nodes,fragmentate_units,draw_chem_graph
+from .polymer_graph_helper import graph_to_dict,process_molecular_weight
 
-from AutoDescriptor import AutoDescriptor
+from .AutoDescriptor import AutoDescriptor
 
 
 
