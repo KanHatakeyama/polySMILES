@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys
 
-sys.path.append('./polysmiles')
+sys.path.append('polysmiles')
 
 setup(name='polysmiles',
         version='2021.5.04',
