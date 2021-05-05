@@ -12,5 +12,5 @@ setup(name='polysmiles',
         #packages = ["PolySMILES"],
         packages = find_packages("polysmiles"),
         #package_dir = {'PolySMILES': 'polysmiles'}
-        package_dir = {'': 'src'}
+        package_dir = {'': 'polysmiles'}
     )
