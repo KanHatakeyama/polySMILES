@@ -174,7 +174,7 @@ class AutoFingerprint:
 
 
 class MordredDescriptor(RDKitDescriptors):
-    def __init__(self,dict_mode=True,auto_correct=True,ignore_3D=False):
+    def __init__(self,dict_mode=True,auto_correct=True,ignore_3D=True):
         from mordred import Calculator, descriptors
         super(RDKitDescriptors, self).__init__()
         self.dict_mode=dict_mode
