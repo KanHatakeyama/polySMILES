@@ -19,6 +19,8 @@
 - version 2021.3.18
 - version 2021.5.04
 	- Impllement fingerprint and JRGUI, change interfaces
+- version 2021.6.01
+    - Implement mordred
 
 # Author
 - Kan Hatakeyama-Sato

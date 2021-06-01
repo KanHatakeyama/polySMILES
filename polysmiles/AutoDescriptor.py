@@ -171,4 +171,23 @@ class AutoFingerprint:
         self.descriptor_names.remove("SMILES")
     def __call__(self,smiles_list):
         return self.ad(smiles_list)
-    
+
+
+class MordredDescriptor(RDKitDescriptors):
+    def __init__(self,dict_mode=True,auto_correct=True,ignore_3D=False):
+        from mordred import Calculator, descriptors
+        super(RDKitDescriptors, self).__init__()
+        self.dict_mode=dict_mode
+        self.calculator=Calculator(descriptors,ignore_3D=ignore_3D)
+        self.auto_correct=auto_correct
+        self.desc_list=list(self.calculator.pandas([mol_from_smiles("C")]).columns)
+        
+    def _desc_calc(self,smiles,dict_mode=False):
+        m=mol_from_smiles(smiles)
+        res=list(self.calculator(m))
+        res=np.array(res).astype(float)
+        
+        if dict_mode:
+            return res
+        else:
+            return list(res)
