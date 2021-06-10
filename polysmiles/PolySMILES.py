@@ -21,7 +21,7 @@ class PolySMILES:
                 ):
         self.calculator=calculator
         self.cap_atom=cap_atom
-        self.dict_mode=True
+        self.dict_mode=False
         
     def auto(self,smiles_list):
         if type(smiles_list) is type(""):
