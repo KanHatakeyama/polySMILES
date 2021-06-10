@@ -18,6 +18,7 @@ from .JRWrapper import JRWrapper
 import os
 import zlib
 import base64
+import joblib
 
 def zip_str(text: str) -> str:
     b = zlib.compress(text.encode())
