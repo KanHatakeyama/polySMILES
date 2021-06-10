@@ -144,11 +144,11 @@ class RDKitDescriptors:
         return res_list
     
 
-    def auto_calc(self,arg):
+    def auto_calc(self,arg,pandas_mode=True):
         if type(arg) is type(""):
             return self.calc(arg)
         elif type(arg) is type([]):
-            return self.calc_list(arg)
+            return self.calc_list(arg,pandas_mode=pandas_mode)
         else:
             assert False,("unexpected type: ",type(arg))
             
