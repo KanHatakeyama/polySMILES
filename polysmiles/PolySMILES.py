@@ -18,10 +18,11 @@ class PolySMILES:
     def __init__(self,
                 calculator=AutoDescriptor(),
                 cap_atom="H",
+                dict_mode=False
                 ):
         self.calculator=calculator
         self.cap_atom=cap_atom
-        self.dict_mode=False
+        self.dict_mode=dict_mode
         
     def auto(self,smiles_list):
         if type(smiles_list) is type(""):
