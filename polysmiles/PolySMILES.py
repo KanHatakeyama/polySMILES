@@ -98,8 +98,9 @@ class PolySMILES:
                                       ):
 
         temp_mode=self.dict_mode
-        self.dict_mode=False
+        self.dict_mode=True
         pol_dict=self.smiles_to_dict(smiles,calculate_descriptor=True)        
+        desc_keys=pol_dict[0]["descriptor"].keys()
         self.dict_mode=temp_mode
         
         mw_array=[]
@@ -122,12 +123,12 @@ class PolySMILES:
         mw_ratio=mw_array/total_mw
 
         #calculate descriptors
-        desc_array=np.array([pol_dict[unit]["descriptor"] for unit in pol_dict.keys()])
+        desc_array=np.array([list(pol_dict[unit]["descriptor"].values()) for unit in pol_dict.keys()])
         average_descriptor=np.dot(desc_array.T,mw_ratio)
 
         #return as dict
         desc_dict={"SMILES":smiles,"total MW":total_mw}
-        temp_dict={k:v for k,v in zip(self.calculator.descriptor_names,average_descriptor)}
+        temp_dict={k:v for k,v in zip(desc_keys,average_descriptor)}
         desc_dict.update(temp_dict)
 
         return desc_dict
