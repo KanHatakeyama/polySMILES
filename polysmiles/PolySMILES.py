@@ -18,7 +18,6 @@ class PolySMILES:
     def __init__(self,
                 calculator=AutoDescriptor(),
                 cap_atom="H",
-                 
                 ):
         self.calculator=calculator
         self.cap_atom=cap_atom
@@ -34,7 +33,11 @@ class PolySMILES:
                 res_dict[i]=self.smiles_to_weighted_descriptors(smiles)
             except:
                 print(i, " error!",  smiles)
-        return pd.DataFrame.from_dict(res_dict).T
+                
+        if self.dict_mode:
+            return res_dict
+        else:
+            return pd.DataFrame.from_dict(res_dict).T
 
 
     def smiles_to_dict(self,
