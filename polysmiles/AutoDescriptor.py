@@ -15,6 +15,23 @@ import numpy as np
 from numpy import inf
 from rdkit.Avalon.pyAvalonTools import GetAvalonFP
 from .JRWrapper import JRWrapper
+import os
+import zlib
+import base64
+
+def zip_str(text: str) -> str:
+    b = zlib.compress(text.encode())
+    return base64.b85encode(b).decode()
+
+def unzip_str(text: str) -> str:
+    b = base64.b85decode(text)
+    return zlib.decompress(b).decode()
+
+
+#folder path to save descriptor data
+sm_path="descriptor_data"
+
+
 
 #make mol object from smiles
 def mol_from_smiles(smiles,assert_smiles=True):
@@ -52,6 +69,7 @@ class RDKitDescriptors:
     def __init__(self,auto_correct=True,dict_mode=True):
         self.desc_list = [desc_name[0] for desc_name in Descriptors.descList]
         self.calculator = MoleculeDescriptors.MolecularDescriptorCalculator(self.desc_list)
+        self.desc_list = ["RDKit_desc_"+desc_name for desc_name in self.desc_list]
         self.auto_correct=auto_correct
         self.dict_mode=dict_mode
         
@@ -65,13 +83,43 @@ class RDKitDescriptors:
         smiles: smiles
         dict_mode: if true, return type will be a dict, otherwise, list
         """
-        descs=self._desc_calc(smiles)
         
+        #make dir
+        if not os.path.exists(sm_path):
+            os.mkdir(sm_path)
+            
+        #search data for already calcualted descriptors
+        zipped_sm=zip_str(smiles)
+        path=sm_path+"/"+zipped_sm
+
+        if os.path.exists(path):
+            all_desc_dict=joblib.load(path)
+        else:
+            all_desc_dict={}
+
+        fin_flag=False
+
+        #check for previous descriptor data
+        if self.desc_list[0] in all_desc_dict.keys():
+            #load calculated data
+            descs=[all_desc_dict[k] for k in self.desc_list]
+            fin_flag=True
+
+        else:
+            #calculate newly
+            descs=self._desc_calc(smiles)
+
         if self.auto_correct:
             descs=auto_correct_descs(descs)      
-        
+
+        desc_dict={k:v for k,v in zip(self.desc_list,descs)}
+
+        #save updated dict data
+        if not fin_flag:
+            all_desc_dict.update(desc_dict)
+            joblib.dump(all_desc_dict,path)
+
         if self.dict_mode:
-            desc_dict={k:v for k,v in zip(self.desc_list,descs)}
             return desc_dict
         else:
             return descs
@@ -102,7 +150,7 @@ class RDKitDescriptors:
             return self.calc_list(arg)
         else:
             assert False,("unexpected type: ",type(arg))
-
+            
             
 #calculate fingerprnt
 #default FP function
@@ -117,7 +165,7 @@ class Fingerprint(RDKitDescriptors):
         super(RDKitDescriptors, self).__init__()
         self.calculator=fp_func
         self.fp_len=len(fp_func("C"))
-        self.desc_list=["FP"+str(i) for i in range(self.fp_len)]
+        self.desc_list=["FP_"+str(i) for i in range(self.fp_len)]
         self.auto_correct=False
         self.dict_mode=dict_mode
         
@@ -181,6 +229,8 @@ class MordredDescriptor(RDKitDescriptors):
         self.calculator=Calculator(descriptors,ignore_3D=ignore_3D)
         self.auto_correct=auto_correct
         self.desc_list=list(self.calculator.pandas([mol_from_smiles("C")]).columns)
+        self.desc_list = ["Mordred_desc_"+desc_name for desc_name in self.desc_list]
+        
         
     def _desc_calc(self,smiles,dict_mode=False):
         m=mol_from_smiles(smiles)

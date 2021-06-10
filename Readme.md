@@ -21,6 +21,8 @@
 	- Impllement fingerprint and JRGUI, change interfaces
 - version 2021.6.01
     - Implement mordred
+- version 2021.6.10
+    - Save and reload already calculated descriptors
 
 # Author
 - Kan Hatakeyama-Sato
