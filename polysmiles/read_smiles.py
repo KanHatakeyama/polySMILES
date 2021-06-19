@@ -182,7 +182,8 @@ def read_smiles(smiles, explicit_hydrogen=False, zero_order_bonds=True,
                 ring_nums[token] = (idx - 1, next_bond)
                 next_bond = None
         elif tokentype == TokenType.EZSTEREO:
-            LOGGER.warning('E/Z stereochemical information, which is specified by "%s", will be discarded', token)
+            #LOGGER.warning('E/Z stereochemical information, which is specified by "%s", will be discarded', token)
+            pass
     if ring_nums:
         raise KeyError('Unmatched ring indices {}'.format(list(ring_nums.keys())))
 

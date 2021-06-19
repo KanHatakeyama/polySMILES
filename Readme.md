@@ -23,6 +23,8 @@
     - Implement mordred
 - version 2021.6.10
     - Save and reload already calculated descriptors
+- version 2021.6.19
+    - Ignore warning while parsing smiles
 
 # Author
 - Kan Hatakeyama-Sato
