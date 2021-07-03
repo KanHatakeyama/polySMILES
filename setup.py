@@ -4,7 +4,7 @@ import sys
 sys.path.append('./polysmiles')
 
 setup(name='polysmiles',
-        version='2021.6.19',
+        version='2021.7.03',
         description='PolySMILES',
         long_description="README",
         author='Kan Hatakeyama',

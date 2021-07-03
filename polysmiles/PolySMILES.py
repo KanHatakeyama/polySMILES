@@ -97,11 +97,15 @@ class PolySMILES:
                                        default_n=50
                                       ):
 
-        temp_mode=self.dict_mode
+        if self.dict_mode:
+            dict_flag=True
+        else
+            dict_flag=False
+        
         self.dict_mode=True
         pol_dict=self.smiles_to_dict(smiles,calculate_descriptor=True)        
         desc_keys=pol_dict[0]["descriptor"].keys()
-        self.dict_mode=temp_mode
+        self.dict_mode=dict_flag
         
         mw_array=[]
         #calculate molecular weight of each unit
