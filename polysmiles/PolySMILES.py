@@ -99,7 +99,7 @@ class PolySMILES:
 
         if self.dict_mode:
             dict_flag=True
-        else
+        else:
             dict_flag=False
         
         self.dict_mode=True
