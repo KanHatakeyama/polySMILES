@@ -1,6 +1,10 @@
 # PolySMILES
 - A module to process polymer information, written in SMILES format 
 
+# Important
+- A newer format, PolyMOL, is available!
+- https://github.com/KanHatakeyama/PolyMolParser
+
 # What can be done?
 <img src="pics/top.PNG">
 
